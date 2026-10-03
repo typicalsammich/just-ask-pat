@@ -1,1 +1,8 @@
 const b=document.querySelector('.menu');const n=document.querySelector('.nav');if(b)b.addEventListener('click',()=>n.classList.toggle('open'));
+
+const sticky=document.querySelector('.sticky-call');
+const updateSticky=()=>{if(!sticky)return; if(window.innerWidth<=620&&window.scrollY>180)sticky.classList.add('visible');else sticky.classList.remove('visible')};
+window.addEventListener('scroll',updateSticky,{passive:true});window.addEventListener('resize',updateSticky);updateSticky();
+
+const lb=document.getElementById('galleryLightbox');
+if(lb){const img=lb.querySelector('#lightboxImage'),title=lb.querySelector('#lightboxTitle'),desc=lb.querySelector('#lightboxDescription');const close=()=>{lb.classList.remove('open');lb.setAttribute('aria-hidden','true');document.body.classList.remove('lightbox-open');setTimeout(()=>img.src='',280)};document.querySelectorAll('.shot').forEach(card=>card.addEventListener('click',e=>{e.preventDefault();img.src=card.getAttribute('href');img.alt=card.dataset.title||card.querySelector('img')?.alt||'Completed project';title.textContent=card.dataset.title||card.querySelector('span')?.textContent||'Completed project';desc.textContent=card.dataset.description||'Completed work by Just Ask Pat Handyman Services.';lb.classList.add('open');lb.setAttribute('aria-hidden','false');document.body.classList.add('lightbox-open')}));lb.querySelector('.lightbox-close').addEventListener('click',close);lb.querySelector('.lightbox-backdrop').addEventListener('click',close);document.addEventListener('keydown',e=>{if(e.key==='Escape'&&lb.classList.contains('open'))close()})}
